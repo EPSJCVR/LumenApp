@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\198a9f436a50cbe39463e644c5ee0db6dd3f82fa\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0b53c4b90654b67ee3892a8e2e7b819c083ab7a6">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_31fc4311dca022a3eaefcb29a0c8c29593063878\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\d6b9e9aa4568640e981f8658964bc517ee88e533\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_027ff979fd8a86236f12080f50eaa9391524a8b5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\ea605080386a796f23c02a08353a48885e34a7b2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a496786d7d0f10236e1ba8b92f8a1eba0e6d42bf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\5918c69d4021379be76a26fcbab68380adf36556\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="679251204de40ace98776a6f4e3a649c27e3d89f">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f1c84166c9cfdc6dfbf7363c1c1caa5700e2fcc8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\0bd5f22e7cbf36eeffa282e6859bd4378202dd72\output\jars\libs\internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.0.0_fffe1ddc1afc363809261c5dafad6a4e3fd3d196\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\f59bc21d62dd3ab9e6d80d691a302b10996311de\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a972970c8beddb69c198f61f3fc55f0606a7dfe3">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8061ea465607646b3c1021491fda6047ce51dd81\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\0cb0cf37b091c7458e96493b81cd4cde871eb7dc\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e9b2cfdfd59b03643f1e240668275378b96615a8">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_dcaa3d09c38e808d1bbf3dc9fdff80ce0dfd7a0c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\03ae3a94a728e83026bd6d00e1d2d681e13c10f6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e56f31b23ddb067f95f01255295167db7c798612">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9bfab74b6b82b98a6fe134c096ff5294d4f8b511\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\664e95ecd17ec986ac1de75a3b708f1a6fb1fb8d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3f8f779a22cbb4c4d0759467a4f1011bb5252970">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a9b1dd165251ad68c7b377cd718639b2fdfb1482\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\a02d241783e68bb9bf558e8a7baaa8325048ae7e\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f2d240dd085626f03f759c41d628a0c8b63e491f">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4a92ee2f5abc5f2ecb20fdb748e9e0c85d6af1cd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\82798711e7009ca11d2f1dc2de837ad00b3016c7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ec9104b53aee77dfcfd2fe1c4add23ff7c4df55f">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ddc4e07edd81ac6dd2b1d5590a189f19745d65da\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\0cc5dcbc6de548face5fca82c4bdb558e8521721\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e3234cd25e23069abd48ecd2117bc0e8011bf45a">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_03b0e8cd25f76f20e3a5e7d95d4a51320f595746\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\847e11d047927c8513aa9df9448c3ea471e82120\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="50e35ae101a679c4c8ef3dda075b1df9d5d947d9">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_42f9b1b2da9784a1dbcfe6952c4a2e93da91035c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\0bd5f22e7cbf36eeffa282e6859bd4378202dd72\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_111a3b4039349d5e2276ec44c146d3ab669e7844\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\aa41ee6fdd057e01eea0875b6792d988acbf9b77\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c81df6bd515398ebe45089b0b16c55752a131f6a">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e38226a51b2053f6c256777a107cb5bf5d09f0e0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\297638aebba0b5798f70c67d402bff137e685f39\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="74ac7cbcf0de4a88e59612dc3a9e3f9e71acb4ca">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c3aabb42b75d2d0aa70c97b9f230aea2336c533c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\2e166c91b19438efc77bd33b5dd37ded37daa1a8\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a30aea7df545072ad3c06f56b2efc13e67222140">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4115fc8b2bc329bf3fdef99c2ae2dc0550bd5c7d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\d354f90e66b00b972a2a2e1269555448be34408d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="20a3c4e355150c15c13dd58045d43ad0c717d916">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_79f56a664afdf5a15312f661199f8f9d258242b3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\7a2d4beabea626cd58212c35468a6a848108ca3b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="910c013c511f752c4bbe24c5f492f669f4a3ccc0">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a179401df26d9a48fdddf3d10c9fcd0f4632b285\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\66fc3eda72165541aea2e301b2e1ecd2d984dc19\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="15e59454416c6341bd3ed2533b585cd340682dd1">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_552ed033ebfd4db01fa99016f5e009d33d9bf9f5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\6c7144764d8a33d6e7aaf17d9cf48b1085aa7b8a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6b44143e83e84f2891dec6f260c4307b3f097afa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\6deab49507c4c42a7986ca747ba002edba0522cf\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5f47ede9561595584dca71104baa0fecb36dda87">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_07cc3a094126bf31bbed8e65711b7b23c18eb4b0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\cff41daa52504dd0c8378f60932538caec65d552\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="266570862e5792ef3c51143a8b8593cf54fac68d">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9a92887ce3e63364c3b3ae9fee1d837bf6621243\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\d6546522d004bc34281b3b44ef56aa67f135a1f0\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="04bbbddf868aa02dd33f9e90d8f5d908c360f638">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_32d55a364229f64a38540dfd14660fa8ed7bc616\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\81b697618412b4840df89ec9200789bae891ce4a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7e92aadd0697922316d1395c1887a23aebec640a">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_95e69023ce89997499542e563d5f42f34c7eb756\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b05efbdf6fec61f4cbafba9d707c698fcfe2dd5c">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_1545aaf5dc466139790d06b058b9b3cd3f8d74a5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\3afce0addef7b8ee8427d05de8af8b5844950b18\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2d3035050a075484cbf2e33f1ce1f779bae4d451">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ec9c7eab19dd213d425291e1e14101968dd0ea37\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\2567ecd582d0371a4783d9d374c286cfb38c2baf\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="03df48d3713661d66ad024b1e406259a4c26fcac">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_76a88be18631f767f03f79eb06f2e8f451d97b1d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\8dc0a52cb9998a60793e721547b5d417ebb98bcc\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="cef85cfc7df40e29fbea58844dd4c1e7d0b15542">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ab94911cb8bb0e1caa879ae66c8ef2e5090daaa4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\971d63fc54812946e42d5c65174c11ef668a8acd\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="190a642ba16d1421296a4d794606279b80039c59">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5c8f91b110196d776e50f20ff483bf5a65519d9d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\cb9d78390c71180f9448db430a7b006da058b40d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a7a04d6b7c01e569a285fa627cf64f5b05295906">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f4bef09a17df5aa9504fdd7a953d7b1a7b9a6ba3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\95165b1eb5ff0247233ffb3368bb3b50602e2244\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9dae58326f6f6a515022468cce56dd04ec3b9fdb">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8fc1185947dd76116548a3e39838d02911fe145a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\cf1a1b816ebfd5291a6ea2e3bcd4c072185d3a60\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="055eed08c9cff50cac0db69c74c4d9ff7aef3d84">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4529d6e5dbf136c8c2af960291373de3f5431be1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\12c1c3582ade1f3bc13e9c11d4ef98cb9f0ab263\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4438b1a7848a7c571122ba618aa1304514aabee6">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_618e07f400dd3023c25e48a77bcc46c46953b1b8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\e7fbfa61f71430e7c06c2a7d9f0ccddb6e613544\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ee5304fd374e0b4ebf6b42d4037fbfb2c5336511">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d8f45948ba91dbac55e131a17d2ffbcc77e9c099\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\22288f1973a786753bbc98679fadb43509ef9f09\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a2537b11ae24b42172d34e2a613fc0b903c56158">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_245f0847e3c768178c6918594c35d2d36e85f61a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\c7503ed8c07c9b6916361d68f053dad294b8eccf\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ca851be26ff89f5b32cc222cee98139fb3fac830">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_848e1e746fb8a434dd19121b477320fdeb2bfe64\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\b3e9150dbe5cb611530160ee89645ac579bfe9e6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="289cad663c288ce965463cb9ece8b35cc7de0fac">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6fdb97fb773ec5e2e4c330e7b8cd21ee75f37861\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\f229e20c8c16d851ebaa9922f9f7493358b93f5d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9ff04cc3470178a44512624036751a803418c2ca">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3f9c794c22577a06657065cd7e038c1206eddf31\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\62d58d31aba9f958422d0d2c03093f6f1dcab754\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6b6f292b8b951dcf2ecf2b20853e3eabc7d65c48">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a37984ddb01e098406d49ed672a94c8e6ab842b0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\a11bebd3539b0e9f1d5dcb21888d6421fdb6c797\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7fd91ec2730fdaa82906aad32a3f3d3e574bae56">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_639aa9478cde6437f7c16077921c2676c0a3ac9a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\1fbe202610cf04882e3fe14e273cb3ab8d1a4e14\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0b8e087da59c0b062c33f49a335e59f907086da2">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_406ea73860e25ee6aa83784db392273cca571ccc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\3b40a6c24af214ce0f67b7ecd9d303401994c5d7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="363a20f1d25336e827dd24020f2ecdc42d62638f">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1cbedde9b5a08b34cb51126db7f81cb9bd4ef4cd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_92937e6d8b7738c49ef1eed3dd1db32a938878b2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\57cf1ba2c289f1010f964a47a2ea83a06e1cd19b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="00d358528c5a8731a6e19bca910cbb3fd755ee31">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d579ce4f54069ae447c849edb5ae3db25d3b8818\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\640b6b409df32a97e4758c70db3a3e239969205e\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5ffe8867f51cfc726e9fb21db1e5b6962ebf25a0">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b94756735b4d626ec7c2d021d9f022b94f65e514\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\4b61f3c825e7977fab843f79596c39f25018f48b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b4671be3d1288bf4e5f527cd33e42909fbe4ecc6">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ad695b55d50e00712a430fc8bda5a610c01b6b34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\f8089c1a5b627852d5d5f24c56aa01f368246783\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b892420c343e074cbe35b38f4bef4f0c4c442cfa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\a427258027a012ef5d072e33dcd08a3067d9c1ea\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="fbb3885c40e431cd2b0dc69c0cab2bf6d5da7b43">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c521bf9dcce725718af69e5acb7f326518c69074\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\32e8dd4738d5750d70eb2d332f49b3452cceea82\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a1ed98e01bd58976d80c062fd0ea2968a1ff68a1">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_de59d526fefd9ed828e32005b6f920cff96fa0e5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\8fd36a021bdc2380bdd6d868a0f241c024fc6a48\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c61641e333fa88da21758bab8cc28ee16604b05f">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fdf3ec0b77144783d7a85cf9d6f15cc3ca3e34b5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\4abfabdf77b5503ad34e1d14875d0f72e2b8c475\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="16afe57c1d7f8165d107c7806ce7b0c71de87159">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_48f4711b937df0624c598f7e71143563cbc76e6d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\462810c476b3275ab8a1e59c8b12edeeb74627c2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3daa7a9c9009fd386872a84c177a76979bdcafd6">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ee174d9655d211b7e74ec3842ec2afdb4fb441fc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\User\.android\build-cache\2ce9cd71aec4a0172ecb63beba253039db6b06d2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="85299bf1924dde0200109a58033c5ef84ecb6991">
+        <dex dex="C:\Users\User\Desktop\SOA\copia de AndoirdProyects\LightAutoSystem2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_27898b8abab9f30bee7bdd4d11d4d2a2a8bd745c\classes.dex" />
+    </item>
+
+</items>
