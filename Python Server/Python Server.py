@@ -137,14 +137,14 @@ while True:  # Falta implementar la manera de que se pueda cerrar bien el socket
     else:
         if(msgJson[6] == {'Auto': 1}):  # Modo Automatico activado
             # Crear hilo para escuchar sensores
-        e.clear()  # Cierra hilos en caso de que haya alguno abierto
-        t1 = threading.Thread(name="sensorListener",
-                              target=hacerAutomaticamente,
-                              args=(e, msgJson[2], msgJson[3], msgJson[4],))
-        e.set()
-        t1.start()
-        time.sleep(0.5)
-        msgJson = leerpines()
+            e.clear()  # Cierra hilos en caso de que haya alguno abierto
+            t1 = threading.Thread(name="sensorListener",
+                                  target=hacerAutomaticamente,
+                                  args=(e, msgJson[2], msgJson[3], msgJson[4],))
+            e.set()
+            t1.start()
+            time.sleep(0.5)
+            msgJson = leerpines()
         else:  # Boton Cambiar/Shake/Voice Recognition
             # e.clear()  # Frenar hilo
             modificarActuadores(msgJson)  # Modificar actuadores
