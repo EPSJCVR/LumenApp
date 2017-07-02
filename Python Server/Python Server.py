@@ -2,6 +2,32 @@ import socket
 import json
 import threading  # libreria para usar threads
 import time
+import RPi.GPIO as GPIO  # Cargamos la libreria RPi.GPIO
+GPIO.setmode(GPIO.BOARD)  # pines fisicos
+
+# pinLuz =  # pin luz
+pinB = 33  # pin led azul
+pinG = 35  # pin led verde
+pinR = 38  # pin led rojo
+#pinFotoRes = 18
+# pinPir =
+
+# seteo de Luz:
+GPIO.setup(pinLuz, GPIO.OUT)
+
+# seteo de tira led:
+GPIO.setup(pinR, GPIO.OUT)  # setea modo salida
+GPIO.setup(pinG, GPIO.OUT)
+GPIO.setup(pinB, GPIO.OUT)
+red = GPIO.PWM(pinR, 100)  # establece pwm de los pines led, a 100Hz
+green = GPIO.PWM(pinG, 100)
+blue = GPIO.PWM(pinB, 100)
+blue.start(0)  # Iniciamos el objeto 'blue' al 0% del ciclo de trabajo (completamente apagado)
+green.start(0)
+red.start(0)
+
+# seteo sensor Pir:
+GPIO.setup(pinPir, GPIO.IN)
 
 
 # la clase switch y funcion case son solo para poder usar el switch en
@@ -22,27 +48,52 @@ def case(*args):
 
 
 def encenderLuz():
+    GPIO.output(pinLuz, GPIO.HIGH)
     print("Luz escendida.")
 
 
 def apagarLuz():
+    GPIO.output(pinLuz, GPIO.LOW)
     print("Luz apagada.")
 
 
-def encenderLed():
-    print("Led escendido.")
-
-
 def apagarLed():
+    red.ChangeDutyCycle(0)
+    blue.ChangeDutyCycle(0)
+    green.ChangeDutyCycle(0)
     print("Led apagado.")
 
 
-def cambiarColorLed(r, g, b):
-    print("Color de led cambiado a R:", r, " G:", g, " B:", b)
+def cambiarColorLed(r, g, b, i):
+    r *= i / 100
+    g *= i / 100
+    b *= i / 100
+    red.ChangeDutyCycle(int(r))
+    blue.ChangeDutyCycle(int(g))
+    green.ChangeDutyCycle(int(b))
+    print("Color de led cambiado a R:", r, " G:", g, " B:", b, "Intensidad: ", i)
 
 
-def cambiarIntLed(i):
-    print("Intensidad cambiada al ", i, "%")
+def leerFotoRes():
+    count = 0
+
+    # Output on the pin for
+    GPIO.setup(pinFotoRes, GPIO.OUT)
+    GPIO.output(pinFotoRes, GPIO.LOW)
+    time.sleep(0.1)
+
+    # Change the pin back to input
+    GPIO.setup(pinFotoRes, GPIO.IN)
+
+    # Count until the pin goes high
+    while (GPIO.input(pinFotoRes) == GPIO.LOW):  # cuenta hasta que se cargar capasitor
+        count += 1
+    return count
+
+
+def leerPir():
+    value = GPIO.input(pinPir)
+    return value  # devuelve 0 o 1
 
 
 def runFunction(code):  # se determina a que funcion llamar
@@ -67,28 +118,36 @@ def modificarActuadores(msgJson):
         encenderLuz()
     if (estado_actual[0] == {"Luz": 1} and msgJson[0] == {"Luz": 0}):
         apagarLuz()
-    if (estado_actual[1] == {"Led": 0} and msgJson[1] == {"Led": 1}):
-        encenderLed()
+    if (msgJson[1] == {"Led": 1}):
+        cambiarColorLed(msgJson[2], msgJson[3], msgJson[4], msgJson[5])  # encenderLed()
     if (estado_actual[1] == {"Led": 1} and msgJson[1] == {"Led": 0}):
         apagarLed()
-    cambiarColorLed(msgJson[2], msgJson[3], msgJson[4])
-    cambiarIntLed(msgJson[5])
 
 
 def leerpines():
     # Json trucho para probar
-    msgJson = [{"Luz": 0}, {"Led": 0}, {"Red": 0}, {"Green": 88},
-               {"Blue": 33}, {"Dim": 50}, {"Auto": 1}, {"Actualizar": 0}]
+    ''' msgJson = [{"Luz": 0}, {"Led": 0}, {"Red": 0}, {"Green": 88},
+               {"Blue": 33}, {"Dim": 50}, {"Auto": 1}, {"Actualizar": 0}] '''
     # Leer pines
+    msgJson = []  # declaro array (en python se le dice lista) vacio
+    luz = GPIO.input(pinLuz)
+    if(luz == 1):
+        msgJson.append({"Luz": 1})  # append() agrega nuevo valor al final del array
+    else:
+        msgJson.append({"Luz": 0})
+    # seguir con los demas pines
+    # hay q ver como determinar estado de led y del automatico. (idea: flag global)
     return msgJson
 
 
+'''
 def leerFoto():
     return 0  # Simula fotocelular que detecta luz
 
 
 def leerPir():
     return 1  # Simula movimiento
+'''
 
 
 def hacerAutomaticamente(e, r, g, b):
@@ -110,12 +169,12 @@ def hacerAutomaticamente(e, r, g, b):
             apagarLed()
             estado_actual[1] = {"Led": 0}
 
-        time.sleep(5)
+        time.sleep(5)  # verificar el sleep con el delay del pir, ojo!
 
 
 # comienza ejecución
 socketServer = socket.socket()
-host = "192.168.0.4"  # "127.0.0.1"  # socket.gethostname()
+host = "192.168.0.11"  # "127.0.0.1"  # socket.gethostname()
 port = 5053
 socketServer.bind((host, port))
 socketServer.listen(0)
@@ -148,7 +207,7 @@ while True:  # Falta implementar la manera de que se pueda cerrar bien el socket
         else:  # Boton Cambiar/Shake/Voice Recognition
             # e.clear()  # Frenar hilo
             modificarActuadores(msgJson)  # Modificar actuadores
-            msgJson = leerpines()
+            # msgJson = leerpines()
 
     # MODIFICO JSON PARA PROBAR DETECCION DE ERRORES
     # msgJson[0] = {'Luz': 0}  # Luz
@@ -164,4 +223,16 @@ while True:  # Falta implementar la manera de que se pueda cerrar bien el socket
     clientSocket.close()
 
 socketServer.close()
+blue.stop()            # Detenemos el objeto 'blue'
+green.stop()
+red.stop()             # Detenemos el objeto 'green'
+GPIO.cleanup()
 print("Hasta luego loquita")
+
+
+'''
+Cosas que faltan del server:
+-poder cerrar bien el servidor (poder salir del while(true) y que se cierren todos los pines y sockets)
+-leerpines(): determinar como saber el estado del led y del automatico.
+-cambiar hacerAutomaticamente(), lo de encerderLed
+'''
