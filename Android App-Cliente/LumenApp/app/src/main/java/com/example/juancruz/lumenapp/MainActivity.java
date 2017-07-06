@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
+
 public class MainActivity extends AppCompatActivity {
     Switch switchLuz;
     Switch switchLed;
@@ -440,9 +441,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if ( error != 0) {
-                    Toast.makeText(getApplicationContext(), "Hubo " + error + " errores! ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Hubo " + error + " errores! ", Toast.LENGTH_SHORT).show();
                 }else
-                    Toast.makeText(getApplicationContext(), "Cambios realizados satisfactoriamente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Cambios realizados satisfactoriamente", Toast.LENGTH_SHORT).show();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -576,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 
-            if (mAccel > 30) {
+            if (mAccel > 70) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Device has shaken.", Toast.LENGTH_SHORT);
                 toast.show();
                 Random randomGenerator = new Random();
