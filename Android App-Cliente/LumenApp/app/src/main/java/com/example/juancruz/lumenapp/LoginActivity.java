@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,61 +32,147 @@ public class LoginActivity extends AppCompatActivity {
     String ipServer;
     int puerto;
     Intent intent;
+    Intent intent1;
     Intent intentQR;
     ImageButton qrBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        if(comprobarDatosGuardados() == false){
+            setContentView(R.layout.activity_login);
+            ipText = (EditText) findViewById(R.id.editText);
+            puertoText = (EditText) findViewById(R.id.editText2);
+            conectarBtn = (Button) findViewById(R.id.button);
+            intent = new Intent(this, MainActivity.class);
+            intentQR = new Intent(this, QRRecognizer.class);
+            qrBtn = (ImageButton) findViewById(R.id.imageButton2);
 
-        ipText = (EditText) findViewById(R.id.editText);
-        puertoText = (EditText) findViewById(R.id.editText2);
-        conectarBtn = (Button) findViewById(R.id.button);
-        intent = new Intent(this, MainActivity.class);
-        intentQR = new Intent(this, QRRecognizer.class);
-        qrBtn = (ImageButton) findViewById(R.id.imageButton2);
 
+            conectarBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ipServer = ipText.getText().toString();
+                    puerto = Integer.parseInt(puertoText.getText().toString());
 
-        conectarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ipServer = ipText.getText().toString();
-                puerto = Integer.parseInt(puertoText.getText().toString());
-
-                VerificarConexion verificar = new VerificarConexion(ipServer, puerto);
-                verificar.execute();
-                try {
-                    TimeUnit.MILLISECONDS.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    VerificarConexion verificar = new VerificarConexion(ipServer, puerto);
+                    verificar.execute();
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    intent.putExtra("IP", ipServer);
+                    intent.putExtra("Puerto", puerto);  //esto se va a tener que modificar, para que despues el MainActivity lea del archivo estos datos
+                    if(!verificar.getRespuestaJson().isEmpty()) {
+                        intent.putExtra("JSON", verificar.getRespuestaJson());
+                        startActivity(intent);
+                        guardarDatosLogin(ipServer, puerto); //guardar()*
+                        Toast.makeText(getApplicationContext(), verificar.getRespuestaJson(), Toast.LENGTH_LONG).show();
+                        finish();//cerramos la activity
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Falla al establecer conexión. Ingresar nuevamente los datos", Toast.LENGTH_LONG).show();
+                        ipText.setText("");
+                        puertoText.setText("");
+                    }
                 }
-                intent.putExtra("IP", ipServer);
-                intent.putExtra("Puerto", puerto);
-                if(!verificar.getRespuestaJson().isEmpty()) {
-                    intent.putExtra("JSON", verificar.getRespuestaJson());
-                    startActivity(intent);
-                    guardarDatosLogin(ipServer, puerto); //guardar()*
-                    Toast.makeText(getApplicationContext(), verificar.getRespuestaJson(), Toast.LENGTH_LONG).show();
-                    finish();//cerramos la activity
-                }else{
-                    Toast.makeText(getApplicationContext(), "Falla al establecer conexión. Ingresar nuevamente los datos", Toast.LENGTH_LONG).show();
-                    ipText.setText("");
-                    puertoText.setText("");
+            });
 
+            qrBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(intentQR);
+                    finish();
                 }
-
+            });
+        }
+        else{
+            intent = new Intent(this, MainActivity.class);
+            String read = "";
+            try {
+                StringBuffer buffer = new StringBuffer();
+                FileInputStream inputstream = this.getApplicationContext().openFileInput("login_file");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
+                if (inputstream!=null) {
+                    while ((read = reader.readLine()) != null) {
+                        buffer.append(read + "\n" );
+                    }
+                }
+                read= buffer.toString();
+                inputstream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-
-        qrBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intentQR);
+            String[] loginArray = read.split("\\n");
+            ipServer = loginArray[0];
+            puerto = Integer.parseInt(loginArray[1]);
+            VerificarConexion verificar = new VerificarConexion(ipServer, puerto);
+            verificar.execute();
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+            intent.putExtra("IP", ipServer);
+            intent.putExtra("Puerto", puerto);
+            if(!verificar.getRespuestaJson().isEmpty()) {
+                intent.putExtra("JSON", verificar.getRespuestaJson());
+                startActivity(intent);
+                finish();//cerramos la activity
+            }else{
+                setContentView(R.layout.activity_login);
+                Toast.makeText(getApplicationContext(), "Falla al establecer conexión. Verifique servidor e ingrese nuevamente los datos.", Toast.LENGTH_LONG).show();
+                ipText = (EditText) findViewById(R.id.editText);
+                puertoText = (EditText) findViewById(R.id.editText2);
+                conectarBtn = (Button) findViewById(R.id.button);
+                intent1 = new Intent(this, MainActivity.class);
+                intentQR = new Intent(this, QRRecognizer.class);
+                qrBtn = (ImageButton) findViewById(R.id.imageButton2);
 
-    }
+
+                conectarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ipServer = ipText.getText().toString();
+                        puerto = Integer.parseInt(puertoText.getText().toString());
+
+                        VerificarConexion verificar = new VerificarConexion(ipServer, puerto);
+                        verificar.execute();
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        intent1.putExtra("IP", ipServer);
+                        intent1.putExtra("Puerto", puerto);
+                        if(!verificar.getRespuestaJson().isEmpty()) {
+                            intent1.putExtra("JSON", verificar.getRespuestaJson());
+                            startActivity(intent1);
+                            guardarDatosLogin(ipServer, puerto); //guardar()*
+                            Toast.makeText(getApplicationContext(), verificar.getRespuestaJson(), Toast.LENGTH_LONG).show();
+                            finish();//cerramos la activity
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Falla al establecer conexión. Ingresar nuevamente los datos", Toast.LENGTH_LONG).show();
+                            ipText.setText("");
+                            puertoText.setText("");
+                        }
+                    }
+                });
+
+                qrBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(intentQR);
+                        finish();
+                    }
+                });
+            }
+        }
+
+
+
+
+}
 
     public class VerificarConexion extends AsyncTask<Void, Void, Void> {
         String dstAddress;
@@ -157,6 +244,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void guardarDatosLogin(String ip, int puerto){
 
+        ip = ip + "\n"; //para despues poder leer bien del archivo.
         File file = new File(this.getApplicationContext().getFilesDir(), "login_file");
         FileOutputStream outputstream;
         try {
@@ -167,29 +255,22 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        //Leemos para ver si se guardo correctamente
-        /*
-        String read = "";
+    public boolean comprobarDatosGuardados(){
         try {
             StringBuffer buffer = new StringBuffer();
             FileInputStream inputstream = this.getApplicationContext().openFileInput("login_file");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
             if (inputstream!=null) {
-                while ((read = reader.readLine()) != null) {
-                    buffer.append(read + "\n" );
-                }
+                if (reader.readLine() != null) {
+                    return true;
+                } else
+                    return false;
             }
-            read= buffer.toString();
-
-
-            inputstream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] qrArray = read.split("\\n");
-        Toast.makeText(getApplicationContext(), "Leido de archivo IP: " + qrArray[0] + "\nPuerto: " + qrArray[1] , Toast.LENGTH_LONG).show();
-        //Toast.makeText(getApplicationContext(), read , Toast.LENGTH_LONG).show();
-        */
+        return false;
     }
 }
