@@ -50,7 +50,7 @@ def leerpines():
 
 
 socketServer = socket.socket()
-host = "192.168.0.6"  # "127.0.0.1"  # socket.gethostname()
+host = "192.168.0.14"  # "127.0.0.1"  # socket.gethostname()
 port = 5052
 socketServer.bind((host, port))
 socketServer.listen(0)

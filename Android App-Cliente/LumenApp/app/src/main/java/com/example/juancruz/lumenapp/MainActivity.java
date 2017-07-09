@@ -11,8 +11,18 @@ import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.speech.RecognizerIntent;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -36,7 +46,7 @@ import java.util.Locale;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Switch switchLuz;
     Switch switchLed;
     TextView estadoLuz;
@@ -65,7 +75,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_nav_drawer);
+        ConstraintLayout luces_layout = (ConstraintLayout) findViewById(R.id.luces_layout);
+        luces_layout.setVisibility(View.VISIBLE);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_luces);
 
         intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -567,6 +591,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
+        private static final int SHAKE_SLOP_TIME_MS = 500;
+        private static final int SHAKE_COUNT_RESET_TIME_MS = 6000;
+        private static final int SHAKE_TRESHOLD_COUNT = 2;
+        private long mShakeTimestamp;
+        private int mShakeCount;
 
         public void onSensorChanged(SensorEvent se) {
             float x = se.values[0];
@@ -577,17 +606,30 @@ public class MainActivity extends AppCompatActivity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 
-            if (mAccel > 70) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Device has shaken.", Toast.LENGTH_SHORT);
-                toast.show();
-                Random randomGenerator = new Random();
-                redBar.setProgress(randomGenerator.nextInt(100));
-                greenBar.setProgress(randomGenerator.nextInt(100));
-                blueBar.setProgress(randomGenerator.nextInt(100));
-                Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(100);
-                Cambiar cambiar = new Cambiar(ipServer, puerto);
-                cambiar.execute();
+            if (mAccel > 35) {
+                final long now = System.currentTimeMillis();
+                // ignore shake events too close to each other (500ms)
+                if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
+                    return;
+                }
+                // reset the shake count after 3 seconds of no shakes
+                if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
+                    mShakeCount = 0;
+                }
+                mShakeTimestamp = now;
+                mShakeCount++;
+                if (mShakeCount >= SHAKE_TRESHOLD_COUNT){
+                    //Toast toast = Toast.makeText(getApplicationContext(), "Device has shaken.", Toast.LENGTH_SHORT);
+                    //toast.show();
+                    Random randomGenerator = new Random();
+                    redBar.setProgress(randomGenerator.nextInt(100));
+                    greenBar.setProgress(randomGenerator.nextInt(100));
+                    blueBar.setProgress(randomGenerator.nextInt(100));
+                    Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(100);
+                    Cambiar cambiar = new Cambiar(ipServer, puerto);
+                    cambiar.execute();
+                }
             }
         }
 
@@ -733,6 +775,83 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.nav_drawer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        ConstraintLayout luces_layout = (ConstraintLayout) findViewById(R.id.luces_layout);
+        ConstraintLayout alarmaFecha_layout = (ConstraintLayout) findViewById(R.id.alarmaFecha_layout);
+        ConstraintLayout alarmaHora_layout = (ConstraintLayout) findViewById(R.id.alarmaHora_layout);
+        ConstraintLayout ajustes_layout = (ConstraintLayout) findViewById(R.id.ajustes_layout);
+        ConstraintLayout info_layout = (ConstraintLayout) findViewById(R.id.info_layout);
+
+        if (id == R.id.nav_luces) {
+            alarmaFecha_layout.setVisibility(View.GONE);
+            alarmaHora_layout.setVisibility(View.GONE);
+            ajustes_layout.setVisibility(View.GONE);
+            info_layout.setVisibility(View.GONE);
+            luces_layout.setVisibility(View.VISIBLE);
+
+        } else if (id == R.id.nav_alarma) {
+            luces_layout.setVisibility(View.GONE);
+            alarmaHora_layout.setVisibility(View.GONE);
+            ajustes_layout.setVisibility(View.GONE);
+            info_layout.setVisibility(View.GONE);
+            alarmaFecha_layout.setVisibility(View.VISIBLE);
+
+        } else if (id == R.id.nav_ajustes) {
+            luces_layout.setVisibility(View.GONE);
+            alarmaHora_layout.setVisibility(View.GONE);
+            info_layout.setVisibility(View.GONE);
+            alarmaFecha_layout.setVisibility(View.GONE);
+            ajustes_layout.setVisibility(View.VISIBLE);
+
+        } else if (id == R.id.nav_info) {
+            luces_layout.setVisibility(View.GONE);
+            alarmaHora_layout.setVisibility(View.GONE);
+            ajustes_layout.setVisibility(View.GONE);
+            alarmaFecha_layout.setVisibility(View.GONE);
+            info_layout.setVisibility(View.VISIBLE);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 }
