@@ -1,5 +1,7 @@
 package com.example.juancruz.lumenapp;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -8,7 +10,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.icu.util.Calendar;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.support.constraint.ConstraintLayout;
@@ -26,10 +30,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -37,6 +43,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -47,6 +56,7 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    //variables de luces_layout:
     Switch switchLuz;
     Switch switchLed;
     TextView estadoLuz;
@@ -71,11 +81,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
 
+    //Variables alarma:
+    TimePicker timePicker;
+    TextView alarm_status;
+    Button alarmOn;
+    ImageButton alarmOff;
+    ImageButton dateBtn;
+    int yearAlarm, monthAlarm, dayAlarm, hourAlarm, minuteAlarm;
+    static final int DIALOG_ID = 0;
+    private DatePickerDialog.OnDateSetListener dPickerListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
+        //Navigation Drawer:
         ConstraintLayout luces_layout = (ConstraintLayout) findViewById(R.id.luces_layout);
         luces_layout.setVisibility(View.VISIBLE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_luces);
 
+        //Controles de luces:
         intent = getIntent();
         Bundle bundle = intent.getExtras();
         ipServer = bundle.getString("IP");
@@ -285,6 +307,109 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
+
+        //Alarma:
+        timePicker = (TimePicker)findViewById(R.id.timePicker);
+        alarm_status = (TextView)findViewById(R.id.textAlarmStatus);
+        alarmOn = (Button)findViewById(R.id.buttonGuardar);
+        alarmOff = (ImageButton)findViewById(R.id.buttonCancelar);
+        dateBtn = (ImageButton) findViewById(R.id.imageButtonDateAlarm);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            final Calendar cal = Calendar.getInstance();
+            yearAlarm = cal.get(Calendar.YEAR);
+            monthAlarm = cal.get(Calendar.MONTH)+1; //los meses empiezan en cero
+            dayAlarm = cal.get(Calendar.DAY_OF_MONTH);
+        }
+        dPickerListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                yearAlarm  =year;
+                monthAlarm = month + 1;
+                dayAlarm = dayOfMonth;
+                //Toast.makeText(getApplicationContext(), "Fecha: "+dayAlarm+"/"+monthAlarm+"/"+yearAlarm, Toast.LENGTH_LONG).show();
+            }
+        };
+
+        definirInterfazAlarma();
+
+        dateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DIALOG_ID);
+            }
+        });
+
+        alarmOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    hourAlarm = timePicker.getHour();
+                } else
+                    hourAlarm = timePicker.getCurrentHour();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    minuteAlarm = timePicker.getMinute();
+                } else
+                    minuteAlarm = timePicker.getCurrentMinute();
+                //Toast.makeText(getApplicationContext(), "Alarma : "+hourAlarm+":"+minuteAlarm+" del dia "+ dayAlarm+"/"+monthAlarm+"/"+yearAlarm, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Alarma activada", Toast.LENGTH_LONG).show();
+                try {
+                    JSONObject jsonDay = new JSONObject();
+                    jsonDay.put("Día", dayAlarm);
+                    JSONObject jsonMonth = new JSONObject();
+                    jsonMonth.put("Mes", monthAlarm);
+                    JSONObject jsonYear = new JSONObject();
+                    jsonYear.put("Año", yearAlarm);
+                    JSONObject jsonHour = new JSONObject();
+                    jsonHour.put("Hora", hourAlarm);
+                    JSONObject jsonMinute = new JSONObject();
+                    jsonMinute.put("Minuto", minuteAlarm);
+                    JSONArray jsonAlarm = new JSONArray();
+                    jsonAlarm.put(jsonDay);
+                    jsonAlarm.put(jsonMonth);
+                    jsonAlarm.put(jsonYear);
+                    jsonAlarm.put(jsonHour);
+                    jsonAlarm.put(jsonMinute);
+                    //Toast.makeText(getApplicationContext(), "JSON alarma: "+ jsonAlarm.toString(), Toast.LENGTH_LONG).show();
+
+                    File file = new File(getApplicationContext().getFilesDir(), "alarm_file");
+                    FileOutputStream outputstream;
+                    try {
+                        outputstream = openFileOutput("alarm_file" , Context.MODE_PRIVATE);
+                        outputstream.write(jsonAlarm.toString().getBytes());
+                        outputstream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //enviar json x socket
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                definirInterfazAlarma();
+            }
+        });
+
+        alarmOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Alarma desactivada", Toast.LENGTH_LONG).show();
+                //crear json y mandarlo x socket
+                //eliminar de archivo
+                File file = new File(getApplicationContext().getFilesDir(), "alarm_file");
+                file.delete();
+                definirInterfazAlarma();
+            }
+        });
+        //TODO: mandar el json x el socket...
+                /*  1) leer ip y puerto de archivo guardado.
+                    2) Crear clase que extienda AsyncTask y llamarla
+                        2.1) en el doInBackground: que conecte x socket al server.
+                        2.2) que le envie el json de alarma.    (implementar esta funcionalidad en el server)
+                        2.3) esperar respuesta de confirmacion del server.
+                            2.3.1) si ok -> imprimir en el TextView la hora de la alarma.
+                            2.3.2) si no hay confirm -> Toast informando que no se puedo realizar.
+                */
+
     }
 
     public class Cambiar extends AsyncTask<Void, Void, Void> {
@@ -815,37 +940,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         ConstraintLayout luces_layout = (ConstraintLayout) findViewById(R.id.luces_layout);
-        ConstraintLayout alarmaFecha_layout = (ConstraintLayout) findViewById(R.id.alarmaFecha_layout);
-        ConstraintLayout alarmaHora_layout = (ConstraintLayout) findViewById(R.id.alarmaHora_layout);
+        ConstraintLayout alarma_layout = (ConstraintLayout) findViewById(R.id.alarma_layout);
         ConstraintLayout ajustes_layout = (ConstraintLayout) findViewById(R.id.ajustes_layout);
         ConstraintLayout info_layout = (ConstraintLayout) findViewById(R.id.info_layout);
 
         if (id == R.id.nav_luces) {
-            alarmaFecha_layout.setVisibility(View.GONE);
-            alarmaHora_layout.setVisibility(View.GONE);
+            alarma_layout.setVisibility(View.GONE);
             ajustes_layout.setVisibility(View.GONE);
             info_layout.setVisibility(View.GONE);
             luces_layout.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.nav_alarma) {
             luces_layout.setVisibility(View.GONE);
-            alarmaHora_layout.setVisibility(View.GONE);
             ajustes_layout.setVisibility(View.GONE);
             info_layout.setVisibility(View.GONE);
-            alarmaFecha_layout.setVisibility(View.VISIBLE);
+            alarma_layout.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.nav_ajustes) {
             luces_layout.setVisibility(View.GONE);
-            alarmaHora_layout.setVisibility(View.GONE);
+            alarma_layout.setVisibility(View.GONE);
             info_layout.setVisibility(View.GONE);
-            alarmaFecha_layout.setVisibility(View.GONE);
             ajustes_layout.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.nav_info) {
             luces_layout.setVisibility(View.GONE);
-            alarmaHora_layout.setVisibility(View.GONE);
+            alarma_layout.setVisibility(View.GONE);
             ajustes_layout.setVisibility(View.GONE);
-            alarmaFecha_layout.setVisibility(View.GONE);
             info_layout.setVisibility(View.VISIBLE);
         }
 
@@ -854,4 +974,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if(id == DIALOG_ID){
+            return new DatePickerDialog(this, dPickerListener, yearAlarm, monthAlarm-1, dayAlarm);
+        }
+        return null;
+    }
+
+    public void definirInterfazAlarma(){
+        try {
+            StringBuffer buffer = new StringBuffer();
+            FileInputStream inputstream = this.getApplicationContext().openFileInput("alarm_file");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
+            String read = "";
+            if (inputstream!=null) {
+                if ((read = reader.readLine()) != null) {
+                    alarmOn.setVisibility(View.GONE);
+                    timePicker.setVisibility(View.GONE);
+                    dateBtn.setVisibility(View.GONE);
+                    alarmOff.setVisibility(View.VISIBLE);
+                    try {
+                        JSONArray jsonAlarm = new JSONArray(read);
+                        JSONObject jObj = (JSONObject) jsonAlarm.get(3);
+                        hourAlarm = jObj.getInt("Hora");
+                        jObj = (JSONObject) jsonAlarm.get(4);
+                        minuteAlarm = jObj.getInt("Minuto");
+                        jObj = (JSONObject) jsonAlarm.get(0);
+                        dayAlarm = jObj.getInt("Día");
+                        jObj = (JSONObject) jsonAlarm.get(1);
+                        monthAlarm = jObj.getInt("Mes");
+                        jObj = (JSONObject) jsonAlarm.get(2);
+                        yearAlarm = jObj.getInt("Año");
+                        alarm_status.setText("Alarma activada para "+String.format("%02d:%02d", hourAlarm, minuteAlarm)+" hs "+dayAlarm+"/"+monthAlarm+"/"+yearAlarm);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            alarm_status.setText(""); //si no puede accerder al archivo (xq no existe o fue borrado)...
+            alarmOff.setVisibility(View.GONE);
+            alarmOn.setVisibility(View.VISIBLE);
+            timePicker.setVisibility(View.VISIBLE);
+            dateBtn.setVisibility(View.VISIBLE);
+        }
+    }
 }

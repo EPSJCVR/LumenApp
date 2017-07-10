@@ -24,28 +24,14 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/alarmaFecha_layout"
+        android:id="@+id/alarma_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.example.juancruz.lumenapp.NavDrawerMain"
         tools:showIn="@layout/app_bar_nav_drawer">
 
-        <include layout="@layout/alarma_fecha"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/alarmaHora_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.example.juancruz.lumenapp.NavDrawerMain"
-        tools:showIn="@layout/app_bar_nav_drawer">
-
-        <include layout="@layout/alarma_hora"
+        <include layout="@layout/alarma"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
