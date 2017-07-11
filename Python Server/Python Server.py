@@ -5,6 +5,11 @@ import json
 # python (ya q no tiene).
 # Fuente: https://stackoverflow.com/questions/60208/replacements-for-switch-statement-in-python
 
+global dia, mes, año, hora, minuto
+
+global alarma_status
+alarma_status = 0
+
 
 class switch(object):
     value = None
@@ -49,6 +54,22 @@ def leerpines():
     return msgJson
 
 
+def establecerAlarma(msgJson):
+    global dia, mes, año, hora, minuto
+    if(msgJson[0] == {'Alarma': 1}):
+        dia = msgJson[1]["Día"]
+        mes = msgJson[2]["Mes"]
+        año = msgJson[3]["Año"]
+        hora = msgJson[4]["Hora"]
+        minuto = msgJson[5]["Minuto"]
+    if(msgJson[0] == {'Alarma': 0}):
+        dia = 0
+        mes = 0
+        año = 0
+        hora = 0
+        minuto = 0
+
+
 socketServer = socket.socket()
 host = "192.168.0.14"  # "127.0.0.1"  # socket.gethostname()
 port = 5052
@@ -66,16 +87,46 @@ try:
         # Prueba de Actualizar JSON PARA PROBAR DETECCION DE ERRORES
         if(msgJson[0] == {'Actualizar': 1}):
             # Se chekea estado de pines para crear Json con informacion del contexto
-            msgJson = leerpines()  # Obj JSON con los estados ac
+            if(alarma_status == 1):
+                msgJsonPines = leerpines()  # Obj JSON con los estados ac
+                msgJsonPines.append({'Alarma': 1})
+                alarmaJson = []
+                alarmaJson.append({'Día': dia})
+                alarmaJson.append({'Mes': mes})
+                alarmaJson.append({'Año': año})
+                alarmaJson.append({'Hora': hora})
+                alarmaJson.append({'Minuto': minuto})
+                msgJsonPines.append(alarmaJson)
+                msgJson = json.loads(json.dumps(msgJsonPines))
+            else:
+                msgJson = leerpines()
+                msgJson.append({'Alarma': 0})
+        if(msgJson[0] == {'Alarma': 1}):
+            establecerAlarma(msgJson)  # crea thread que se ocupa de la alarma
+            msgJsonPines = leerpines()
+            msgJsonPines.append({"Alarma": 1})
+            alarmaJson = []
+            alarmaJson.append(msgJson[1])  # dia
+            alarmaJson.append(msgJson[2])  # mes
+            alarmaJson.append(msgJson[3])  # año
+            alarmaJson.append(msgJson[4])  # hora
+            alarmaJson.append(msgJson[5])  # minuto
+            msgJsonPines.append(alarmaJson)
+            msgJson = json.loads(json.dumps(msgJsonPines))
+            alarma_status = 1
+        if(msgJson[0] == {'Alarma': 0}):
+            establecerAlarma(msgJson)  # elimina thread que se ocupa de la alarma
+            msgJson = leerpines()
+            msgJson.append({"Alarma": 0})
+            alarma_status = 0
+            # MODIFICO JSON PARA PROBAR DETECCION DE ERRORES
+            # msgJson[0] = {'Luz': 0}  # Luz
+            # msgJson[1]  = {'Led': 0} #Led
+            #print("Json modificado y enviado, para probar errores")
+            # print(msgJson) #json modificado
 
-        # MODIFICO JSON PARA PROBAR DETECCION DE ERRORES
-        # msgJson[0] = {'Luz': 0}  # Luz
-        # msgJson[1]  = {'Led': 0} #Led
-        #print("Json modificado y enviado, para probar errores")
-        # print(msgJson) #json modificado
-
-        # code = msgJson["Code"]  # utilizo el json y busco en él
-        # runFunction(code)  # realizo la tarea solicitada por el cliente
+            # code = msgJson["Code"]  # utilizo el json y busco en él
+            # runFunction(code)  # realizo la tarea solicitada por el cliente
         print("Mensaje a enviar:", msgJson)
         msgSend = json.dumps(msgJson)
         clientSocket.send(msgSend.encode())

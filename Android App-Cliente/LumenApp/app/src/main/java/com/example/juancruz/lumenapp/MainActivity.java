@@ -299,8 +299,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        actualizarPanatalla(json);
-
         //shake:
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -330,8 +328,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-        definirInterfazAlarma();
-
         dateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -353,7 +349,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     minuteAlarm = timePicker.getCurrentMinute();
                 //Toast.makeText(getApplicationContext(), "Alarma : "+hourAlarm+":"+minuteAlarm+" del dia "+ dayAlarm+"/"+monthAlarm+"/"+yearAlarm, Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Alarma activada", Toast.LENGTH_LONG).show();
+                JSONArray jsonAlarm = new JSONArray();
                 try {
+                    JSONObject alarmStatus = new JSONObject();
+                    alarmStatus.put("Alarma", 1);
                     JSONObject jsonDay = new JSONObject();
                     jsonDay.put("Día", dayAlarm);
                     JSONObject jsonMonth = new JSONObject();
@@ -364,28 +363,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     jsonHour.put("Hora", hourAlarm);
                     JSONObject jsonMinute = new JSONObject();
                     jsonMinute.put("Minuto", minuteAlarm);
-                    JSONArray jsonAlarm = new JSONArray();
+                    jsonAlarm.put(alarmStatus);
                     jsonAlarm.put(jsonDay);
                     jsonAlarm.put(jsonMonth);
                     jsonAlarm.put(jsonYear);
                     jsonAlarm.put(jsonHour);
                     jsonAlarm.put(jsonMinute);
                     //Toast.makeText(getApplicationContext(), "JSON alarma: "+ jsonAlarm.toString(), Toast.LENGTH_LONG).show();
-
-                    File file = new File(getApplicationContext().getFilesDir(), "alarm_file");
-                    FileOutputStream outputstream;
-                    try {
-                        outputstream = openFileOutput("alarm_file" , Context.MODE_PRIVATE);
-                        outputstream.write(jsonAlarm.toString().getBytes());
-                        outputstream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //enviar json x socket
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                definirInterfazAlarma();
+
+                EstablecerAlarma establecerAlarma = new EstablecerAlarma(jsonAlarm);
+                establecerAlarma.execute();
             }
         });
 
@@ -393,23 +383,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Alarma desactivada", Toast.LENGTH_LONG).show();
-                //crear json y mandarlo x socket
-                //eliminar de archivo
-                File file = new File(getApplicationContext().getFilesDir(), "alarm_file");
-                file.delete();
-                definirInterfazAlarma();
+                JSONArray jsonAlarm = new JSONArray();
+                JSONObject alarmStatus= new JSONObject();
+                try {
+                    alarmStatus.put("Alarma", 0);
+                    jsonAlarm.put(alarmStatus);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                EstablecerAlarma establecerAlarma = new EstablecerAlarma(jsonAlarm);
+                establecerAlarma.execute();
             }
         });
-        //TODO: mandar el json x el socket...
-                /*  1) leer ip y puerto de archivo guardado.
-                    2) Crear clase que extienda AsyncTask y llamarla
-                        2.1) en el doInBackground: que conecte x socket al server.
-                        2.2) que le envie el json de alarma.    (implementar esta funcionalidad en el server)
-                        2.3) esperar respuesta de confirmacion del server.
-                            2.3.1) si ok -> imprimir en el TextView la hora de la alarma.
-                            2.3.2) si no hay confirm -> Toast informando que no se puedo realizar.
-                */
 
+        actualizarPanatalla(json);
     }
 
     public class Cambiar extends AsyncTask<Void, Void, Void> {
@@ -708,8 +696,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
 
+            //Alarma:
+            obj = (JSONObject) respuestaJson.get(8);
+            if(obj.getInt("Alarma") == 1){
+                JSONArray alarmaJson;
+                try {
+                    alarmaJson = respuestaJson.getJSONArray(9);
+                    obj = (JSONObject) alarmaJson.get(0);
+                    dayAlarm = obj.getInt("Día");
+                    obj = (JSONObject) alarmaJson.get(1);
+                    monthAlarm = obj.getInt("Mes");
+                    obj = (JSONObject) alarmaJson.get(2);
+                    yearAlarm = obj.getInt("Año");
+                    obj = (JSONObject) alarmaJson.get(3);
+                    hourAlarm = obj.getInt("Hora");
+                    obj = (JSONObject) alarmaJson.get(4);
+                    minuteAlarm = obj.getInt("Minuto");
+                    definirInterfazAlarma(true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                definirInterfazAlarma(false);
+            }
             Toast.makeText(getApplicationContext(), "Panatalla actualizada", Toast.LENGTH_SHORT).show();
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -981,41 +991,81 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return null;
     }
+    
 
-    public void definirInterfazAlarma(){
-        try {
-            StringBuffer buffer = new StringBuffer();
-            FileInputStream inputstream = this.getApplicationContext().openFileInput("alarm_file");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputstream));
-            String read = "";
-            if (inputstream!=null) {
-                if ((read = reader.readLine()) != null) {
-                    alarmOn.setVisibility(View.GONE);
-                    timePicker.setVisibility(View.GONE);
-                    dateBtn.setVisibility(View.GONE);
-                    alarmOff.setVisibility(View.VISIBLE);
+    public class EstablecerAlarma extends AsyncTask<Void, Void, Void> {
+        JSONArray enviadoJson;
+        JSONArray respuestaJson;
+
+        EstablecerAlarma(JSONArray jsonArray){
+            enviadoJson = jsonArray;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                JSONObject obj = (JSONObject) enviadoJson.get(0);
+                Socket socketClient = null;
+                if(obj.getInt("Alarma") == 1){
                     try {
-                        JSONArray jsonAlarm = new JSONArray(read);
-                        JSONObject jObj = (JSONObject) jsonAlarm.get(3);
-                        hourAlarm = jObj.getInt("Hora");
-                        jObj = (JSONObject) jsonAlarm.get(4);
-                        minuteAlarm = jObj.getInt("Minuto");
-                        jObj = (JSONObject) jsonAlarm.get(0);
-                        dayAlarm = jObj.getInt("Día");
-                        jObj = (JSONObject) jsonAlarm.get(1);
-                        monthAlarm = jObj.getInt("Mes");
-                        jObj = (JSONObject) jsonAlarm.get(2);
-                        yearAlarm = jObj.getInt("Año");
-                        alarm_status.setText("Alarma activada para "+String.format("%02d:%02d", hourAlarm, minuteAlarm)+" hs "+dayAlarm+"/"+monthAlarm+"/"+yearAlarm);
-                    } catch (JSONException e) {
+                        socketClient = new Socket(ipServer, puerto);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+                        PrintWriter out = new PrintWriter(socketClient.getOutputStream(),true);
+                        out.println(enviadoJson.toString());
+                        respuestaJson = new JSONArray(in.readLine());
+                    } catch (IOException e) {
                         e.printStackTrace();
+                    } finally {
+                        if(socketClient != null)
+                            try {
+                                socketClient.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                     }
                 }
+                if(obj.getInt("Alarma") == 0) {
+                    try {
+                        socketClient = new Socket(ipServer, puerto);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+                        PrintWriter out = new PrintWriter(socketClient.getOutputStream(),true);
+                        out.println(enviadoJson.toString());
+                        respuestaJson = new JSONArray(in.readLine());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if(socketClient != null)
+                            try {
+                                socketClient.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            alarm_status.setText(""); //si no puede accerder al archivo (xq no existe o fue borrado)...
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void o) {
+            actualizarPanatalla(respuestaJson.toString());
+            super.onPostExecute(o);
+        }
+
+    }
+
+    public void definirInterfazAlarma(boolean estado) {
+        if(estado){
+            alarmOn.setVisibility(View.GONE);
+            timePicker.setVisibility(View.GONE);
+            dateBtn.setVisibility(View.GONE);
+            alarmOff.setVisibility(View.VISIBLE);
+            alarm_status.setText("Alarma activada para "+String.format("%02d:%02d", hourAlarm, minuteAlarm)+" hs "+dayAlarm+"/"+monthAlarm+"/"+yearAlarm);
+        } else {
+            alarm_status.setText("");
             alarmOff.setVisibility(View.GONE);
             alarmOn.setVisibility(View.VISIBLE);
             timePicker.setVisibility(View.VISIBLE);
