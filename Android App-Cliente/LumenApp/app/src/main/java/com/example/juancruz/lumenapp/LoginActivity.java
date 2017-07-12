@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             VerificarConexion verificar = new VerificarConexion(ipServer, puerto);
             verificar.execute();
             try {
-                TimeUnit.MILLISECONDS.sleep(500);
+                TimeUnit.MILLISECONDS.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -120,6 +120,16 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();//cerramos la activity
             }else{
+                //borrar archivo
+                File file = new File(this.getApplicationContext().getFilesDir(), "login_file");
+                FileOutputStream outputstream;
+                try {
+                    outputstream = openFileOutput("login_file" , Context.MODE_PRIVATE);
+                    outputstream.write("".getBytes());
+                    outputstream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 setContentView(R.layout.activity_login);
                 Toast.makeText(getApplicationContext(), "Falla al establecer conexión. Verifique servidor e ingrese nuevamente los datos.", Toast.LENGTH_LONG).show();
                 ipText = (EditText) findViewById(R.id.editText);

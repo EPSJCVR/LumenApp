@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     static final int DIALOG_ID = 0;
     private DatePickerDialog.OnDateSetListener dPickerListener;
 
+    //Variables ajustes:
+    Button btnSalir;
+    Intent intentSalir;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -394,6 +398,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 EstablecerAlarma establecerAlarma = new EstablecerAlarma(jsonAlarm);
                 establecerAlarma.execute();
+            }
+        });
+
+        //Ajustes:
+        btnSalir = (Button) findViewById(R.id.buttonSalir);
+        intentSalir = new Intent(this, LoginActivity.class);
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File file = new File(getApplicationContext().getFilesDir(), "login_file");
+                FileOutputStream outputstream;
+                try {
+                    outputstream = openFileOutput("login_file" , Context.MODE_PRIVATE);
+                    outputstream.write("".getBytes());
+                    outputstream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                startActivity(intentSalir);
             }
         });
 
